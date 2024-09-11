@@ -130,13 +130,7 @@ noremap <Tab>v :<C-u>vsplit<CR>
 "=============================================
 
 " Open a new tab
-nnoremap <leader>tn :tabnew<CR>
-
-" Navigate to the previous tab
-nnoremap <leader>tp :tabprevious<CR>
-
-" Navigate to the next tab
-nnoremap <leader>tn :tabnext<CR>
+nnoremap <C-t> :tabnew<CR>
 
 "=============================================
 "        Split Window Navigation 
@@ -243,20 +237,30 @@ let g:floaterm_keymap_toggle = '<F7>'
 "         Compile And Run C Code 
 "=============================================
 
-function! CompileAndRunC()
+function! CompileAndRun()
     let l:filename = expand('%:r')  " Get the current file name without extension
-    let l:outputfile = l:filename . ".out"  " Output file name with .out extension
-    
-    " Compile the C file and generate the output file
-    exec "!gcc % -o " . l:outputfile
-    
-    " Run the compiled program in the terminal
-    exec "!./" . l:outputfile
+    let l:filetype = &filetype      " Get the file type of the current buffer
+    let l:filepath = expand('%:p')  " Get the full path of the current file
+    let l:relpath = expand('%')     " Get the relative path of the current file
+
+    if l:filetype == 'c'
+        let l:outputfile = l:filename . ".out"  " Output file name with .out extension
+
+        " Compile the C file and generate the output file
+        exec "!gcc " . l:relpath . " -o " . l:outputfile
+
+        " Run the compiled program in the terminal
+        exec "!./" . l:outputfile
+    elseif l:filetype == 'python'
+        " Run the Python file using python3
+        exec "!python3 " . l:filepath
+    else
+        echo "Unsupported file type!"
+    endif
 endfunction
 
-" Map a key to call the function
-nnoremap <F5> :call CompileAndRunC()<CR>
-
+" Map the F5 key to call the function
+nnoremap <F5> :call CompileAndRun()<CR>
 
 "=============================================
 "          Coc Nvim Configration 
@@ -422,4 +426,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
