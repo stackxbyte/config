@@ -11,6 +11,7 @@ cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
 set whichwrap=lh
 
+
 "=============================================
 "                Abrivations
 "=============================================
@@ -168,13 +169,17 @@ Plugin 'voldikss/vim-floaterm'
 Plugin 'morhetz/gruvbox'
 Plugin 'neoclide/coc.nvim'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'ghifarit53/tokyonight-vim'
-Plugin 'bluz71/vim-nightfly-colors'
 Plugin 'bagrat/vim-buffet'
 Plugin 'ryanoasis/vim-devicons'
 "Plugin 'mhinz/vim-startify'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+" Theme Plugins 
+Plugin 'ghifarit53/tokyonight-vim'
+Plugin 'bluz71/vim-nightfly-colors'
+Plugin 'fholgado/Molokai2'
+Plugin 'NLKNguyen/papercolor-theme'
+
 
 
 call vundle#end()            
@@ -185,7 +190,7 @@ filetype plugin indent on
 "=============================================
 
 " Color Scheme 
-colorscheme habamax  
+colorscheme tokyonight  
 set background=dark
 set noshowmode
 set laststatus=2
@@ -215,7 +220,43 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme='minimalist'
+let g:airline_theme='tokyonight'
+
+
+" ---- Customize Airline Sections ----
+" Section a: Show the current mode (Normal, Insert, etc.)
+let g:airline_section_a = airline#section#create(['mode'])
+
+" Section b: Show the Git branch (if in a Git repo) and file name (with readonly flag)
+let g:airline_section_c = airline#section#create(['branch', 'readonly'])
+
+" Section c: Show the filename only, without the full path
+let g:airline_section_b = '%t'
+
+let g:airline_section_x = ' [%{&filetype}]'
+
+
+" Section y: Show the current line and column number
+let g:airline_section_y = '%{&fileencoding} ▌ %{&fileformat}'
+
+" Section z: Show file encoding and file format
+let g:airline_section_z = '%l:%c'
+
+" ---- Custom Function to Display Current Time ----
+" Add current time to the status line in section x
+
+" ---- Performance Optimizations ----
+let g:airline#extensions#branch#enabled = 1  " Enable Git branch display
+let g:airline#extensions#hunks#enabled = 0   " Disable hunks (e.g., Git changes) to speed things up
+let g:airline#extensions#whitespace#enabled = 0  " Disable whitespace checking for performance
+
+let g:airline_left_sep = ''   " Customize the left separator
+let g:airline_right_sep = ''  " Customize the right separator
+
+let g:airline_section_separator = '|'
+let g:airline_section_separator_right = '|'
+let g:airline_subseparator_left = '|'
+let g:airline_subseparator_right = '|'
 "=============================================
 "             Fzf Configration 
 "=============================================
