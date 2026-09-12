@@ -1,17 +1,24 @@
 {
-"languageserver": {
-  "ccls": {
-    "command": "ccls",
-    "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-    "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
-    "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
-      }
-  }
-},
-"clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/18.1.3/clangd_18.1.3/bin/clangd",
+  // C/C++ completion via the coc-clangd extension.
+  // clangd.path is intentionally left empty (the extension's default):
+  // coc-clangd first searches its own data dir for an already-downloaded
+  // clangd, and downloads one automatically if missing. This works on any
+  // system with no manual installs.
+  "clangd.arguments": [
+    "--background-index",
+    "--header-insertion=never"
+  ],
+  "snippets.userSnippetsDirectory": "~/.vim/snippets",
 
-"snippets.userSnippetsDirectory": "~/.vim/snippets"
+  // Inline diagnostics when the cursor is on a line with errors/warnings.
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.enableMessage": true,
+  "diagnostic.messageTarget": "echo",
+  "diagnostic.displaySource": "ifSpace",
+  "diagnostic.floatConfig": {
+    "border": "single",
+    "maxHeight": 10
+  }
 }
